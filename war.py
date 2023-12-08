@@ -90,6 +90,7 @@ def init_game():
 def play_war(deck1, deck2):
     rounds = 0
     wars = 0
+    is_war_over = False
 
     while len(deck1) == 0 or len(deck2) == 0:
         rounds += 1
@@ -101,25 +102,36 @@ def play_war(deck1, deck2):
         elif card1.rank < card2.rank:
             deck2.extend([card1, card2])
         else:
-            # going to war
-            wars += 1
-            war_cards = [card1, card2]
-            war_cards.extend(deck1[:3] + deck2[:3])
-            del deck1[:3]
-            del deck2[:3]
+            while not is_war_over:
+                if not is_ready_for_war(deck1, deck2):
+                    break
 
-            war_card1 = deck1.pop()
-            war_card2 = deck2.pop()
-            war_cards.extend([war_card1, war_card2])
+                wars += 1
+                war_cards = [card1, card2]
+                war_cards.extend(deck1[:3] + deck2[:3])
+                del deck1[:3]
+                del deck2[:3]
 
-            if war_card1 > war_card2:
-                deck1.extend(war_cards)
-            elif war_card1 < war_card2:
-                deck2.extend(war_cards)
-            else:
-                pass
+                war_card1 = deck1.pop()
+                war_card2 = deck2.pop()
+                war_cards.extend([war_card1, war_card2])
 
+                if war_card1 > war_card2:
+                    deck1.extend(war_cards)
+                    is_war_over = True
+                elif war_card1 < war_card2:
+                    deck2.extend(war_cards)
+                    is_war_over = True
+
+    winner = "Player 1" if len(deck1) == 0 else "Player 2"
     return winner, rounds, wars
+
+
+def is_ready_for_war(deck1, deck2):
+    if len(deck1) < 4 or len(deck2) < 4:
+        return False
+    else:
+        return True
 
 
 if __name__ == "__main__":
