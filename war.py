@@ -25,7 +25,7 @@ class Deck:
     def dsplit(self):
         half = len(self.cards) // 2
         return self.cards[:half], self.cards[half:]
-    
+
 def main():
 
     while True:
@@ -46,7 +46,7 @@ def init_game():
                 sys.stdout.write(str(i)+' ')
                 sys.stdout.flush()
                 time.sleep(0.5)
-            
+
             deck.shuffle()
             print("\nShuffling\n")
             for i in [".", ".", ".", " Deck shuffled.\n"]:
@@ -54,14 +54,14 @@ def init_game():
                 sys.stdout.flush()
                 time.sleep(0.5)
 
-            
+
             player1_deck, player2_deck = deck.dsplit()
             print("\nDealing cards to players\n")
             for i in [".", ".", ".", " Deck dealt for Player 1 and Player 2.\n"]:
                 sys.stdout.write(str(i)+' ')
                 sys.stdout.flush()
                 time.sleep(0.5)
-            
+
 
             print("\nPlaying")
             winner, rounds, wars = play_war(player1_deck, player2_deck)
@@ -69,7 +69,7 @@ def init_game():
                 sys.stdout.write(str(i)+' ')
                 sys.stdout.flush()
                 time.sleep(0.5)
-            print("\n")            
+            print("\n")
             print(f"{winner} won the game after {rounds} rounds and {wars} wars.\n")
 
 
@@ -102,12 +102,13 @@ def play_war(deck1, deck2):
                 # Check if either player has enough cards for another war
                 if len(deck1) < 4 or len(deck2) < 4:
                     game = False
-                    break  
+                    break
                 war_cards.extend(deck1[:3] + deck2[:3])
                 random.shuffle(war_cards)
                 deck1 = deck1[3:]
                 deck2 = deck2[3:]
-        # os.system('cls' if os.name == 'nt' else 'clear') 
+        # uncomment below to see the game
+        # os.system('cls' if os.name == 'nt' else 'clear')
         # print(f"Move: {card1} Player 1 deck: {deck1}\n")
         # print(f"Move: {card2} Player 2 deck: {deck2}\n")
 
@@ -118,4 +119,4 @@ def play_war(deck1, deck2):
 
 
 if __name__ == "__main__":
-    main() 
+    main()
